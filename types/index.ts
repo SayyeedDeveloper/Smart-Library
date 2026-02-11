@@ -74,6 +74,7 @@ export const INTERESTS: readonly Option[] = [
   { value: 'history', label: 'History', icon: 'landmark' },
   { value: 'art', label: 'Art', icon: 'palette' },
   { value: 'nature', label: 'Nature', icon: 'tree-pine' },
+  { value: 'family', label: 'Family', icon: 'user-star' },
 ] as const;
 
 // Genre options
@@ -92,8 +93,7 @@ export const GENRES: readonly Option[] = [
 // Language options
 export const LANGUAGES: readonly Option[] = [
   { value: 'english', label: 'English', icon: 'globe' },
-  { value: 'spanish', label: 'Spanish', icon: 'globe' },
-  { value: 'bilingual', label: 'Bilingual', icon: 'languages' },
-  { value: 'french', label: 'French', icon: 'globe' },
+  { value: 'uzbek', label: 'Uzbek', icon: 'globe' },
+  { value: 'russian', label: 'Russian', icon: 'globe' },
   { value: 'other', label: 'Other', icon: 'globe' },
 ] as const;
