@@ -1,26 +1,59 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Backgrounds */
+  --color-background: #ffffff;
+  --color-foreground: #001449;
+
+  /* Cards */
+  --color-card: #fafafa;
+  --color-card-foreground: #001449;
+
+  /* Popover */
+  --color-popover: #ffffff;
+  --color-popover-foreground: #001449;
+
+  /* Primary - #0038d2 */
+  --color-primary: #0038d2;
+  --color-primary-foreground: #ffffff;
+
+  /* Secondary - light tint of #002fb0 */
+  --color-secondary: #cce0ff;
+  --color-secondary-foreground: #002fb0;
+
+  /* Muted */
+  --color-muted: #f0f0f0;
+  --color-muted-foreground: #4a5568;
+
+  /* Accent - light tint of #00268d */
+  --color-accent: #d9e6ff;
+  --color-accent-foreground: #00268d;
+
+  /* Destructive */
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+
+  /* Borders */
+  --color-border: #e2e8f0;
+  --color-input: #e2e8f0;
+  --color-ring: #0038d2;
+
+  /* Typography */
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-nunito);
+
+  /* Radius */
+  --radius: 0.75rem;
+  --radius-lg: calc(0.75rem - 2px);
+  --radius-md: calc(0.75rem - 4px);
+  --radius-sm: calc(0.75rem - 6px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
 }
