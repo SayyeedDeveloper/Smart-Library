@@ -142,7 +142,7 @@ export async function POST(req: NextRequest) {
       model: "gemini-2.5-flash",
       generationConfig: {
         temperature: 0.7,
-        maxOutputTokens: 300, // Keep responses concise
+        maxOutputTokens: 10244, // Allow complete responses (was 300 - too low!)
         topP: 0.9,
       },
       safetySettings: [
@@ -165,13 +165,15 @@ export async function POST(req: NextRequest) {
       ],
     });
 
-    // Build conversation history
-    const chatHistory = conversationHistory.slice(-10).map((msg) => ({
+    // Build conversation history (keep last 20 messages for better context)
+    const chatHistory = conversationHistory.slice(-20).map((msg) => ({
       role: msg.role === "user" ? "user" : "model",
       parts: [{ text: msg.content }],
     }));
 
-    // Start chat with history
+    console.log(`💬 Using ${chatHistory.length} previous messages for context`);
+
+    // Start chat with system prompt and history
     const chat = model.startChat({
       history: [
         {
@@ -182,7 +184,7 @@ export async function POST(req: NextRequest) {
           role: "model",
           parts: [
             {
-              text: "I understand! I'm here to help you discover great books from your personalized recommendations. What would you like to know?",
+              text: `Perfect! I've got all ${recommendations.length} books here and I'm ready to help ${wizardData.name} find the perfect read! I know about their interests (${wizardData.interests.join(", ")}), favorite genres (${wizardData.genres.join(", ")}), and I can answer any questions about these carefully selected books. Let's find your next favorite story! 📚✨`,
             },
           ],
         },
@@ -191,35 +193,60 @@ export async function POST(req: NextRequest) {
     });
 
     // Send message and get streaming response
+    console.log("🚀 Starting Gemini stream...");
     const result = await chat.sendMessageStream(sanitizedMessage);
 
     // Create readable stream for SSE
     const encoder = new TextEncoder();
+    let totalChunks = 0;
+    let totalLength = 0;
+
     const stream = new ReadableStream({
       async start(controller) {
         try {
+          console.log("📡 Stream opened, waiting for chunks...");
+
           for await (const chunk of result.stream) {
             const text = chunk.text();
-            // Send as Server-Sent Event
-            const data = `data: ${JSON.stringify({ text })}\n\n`;
-            controller.enqueue(encoder.encode(data));
+
+            if (text) {
+              totalChunks++;
+              totalLength += text.length;
+
+              console.log(`📦 Chunk ${totalChunks}: ${text.length} chars - "${text.substring(0, 50)}..."`);
+
+              // Send as Server-Sent Event
+              const data = `data: ${JSON.stringify({ text })}\n\n`;
+              controller.enqueue(encoder.encode(data));
+            }
           }
+
+          console.log(`✅ Stream complete! Sent ${totalChunks} chunks, ${totalLength} total characters`);
+
           // Send completion signal
           controller.enqueue(encoder.encode("data: [DONE]\n\n"));
           controller.close();
         } catch (error) {
-          console.error("Streaming error:", error);
+          console.error("❌ Streaming error:", error);
+
+          // Send error to client
+          const errorData = `data: ${JSON.stringify({
+            error: "Stream interrupted",
+            details: error instanceof Error ? error.message : "Unknown error"
+          })}\n\n`;
+          controller.enqueue(encoder.encode(errorData));
           controller.error(error);
         }
       },
     });
 
-    // Return streaming response
+    // Return streaming response with proper headers
     return new Response(stream, {
       headers: {
         "Content-Type": "text/event-stream",
-        "Cache-Control": "no-cache",
-        Connection: "keep-alive",
+        "Cache-Control": "no-cache, no-transform",
+        "Connection": "keep-alive",
+        "X-Accel-Buffering": "no", // Disable nginx buffering
       },
     });
   } catch (error: unknown) {

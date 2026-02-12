@@ -69,7 +69,9 @@ export function useChat({ wizardData, recommendations }: UseChatOptions) {
           matchReasons: rec.matchReasons,
         }));
 
-        // Call API
+        // Call API with full conversation history (loaded from localStorage)
+        console.log(`📤 Sending message with ${messages.length} previous messages in history`);
+
         const response = await fetch("/api/chat", {
           method: "POST",
           headers: {
@@ -79,7 +81,7 @@ export function useChat({ wizardData, recommendations }: UseChatOptions) {
             message: content.trim(),
             wizardData,
             recommendations: simplifiedRecommendations,
-            conversationHistory: messages,
+            conversationHistory: messages, // Includes full history from localStorage
           }),
         });
 
@@ -109,43 +111,65 @@ export function useChat({ wizardData, recommendations }: UseChatOptions) {
 
         setMessages((prev) => [...prev, assistantMessage]);
 
-        // Read stream
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
+        // Read and process SSE stream
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) {
+              console.log("✅ Stream completed successfully");
+              break;
+            }
 
-          const chunk = decoder.decode(value);
-          const lines = chunk.split("\n");
+            const chunk = decoder.decode(value, { stream: true });
+            const lines = chunk.split("\n");
 
-          for (const line of lines) {
-            if (line.startsWith("data: ")) {
-              const data = line.slice(6);
+            for (const line of lines) {
+              const trimmedLine = line.trim();
 
-              if (data === "[DONE]") {
-                break;
-              }
+              if (trimmedLine.startsWith("data: ")) {
+                const data = trimmedLine.slice(6).trim();
 
-              try {
-                const parsed = JSON.parse(data);
-                if (parsed.text) {
-                  assistantContent += parsed.text;
-
-                  // Update assistant message with accumulated content
-                  setMessages((prev) =>
-                    prev.map((msg) =>
-                      msg.id === assistantMessageId
-                        ? { ...msg, content: assistantContent }
-                        : msg
-                    )
-                  );
+                if (data === "[DONE]") {
+                  console.log("✅ Received [DONE] signal");
+                  break;
                 }
-              } catch (err) {
-                console.error("Failed to parse SSE data:", err);
+
+                if (!data) continue; // Skip empty data
+
+                try {
+                  const parsed = JSON.parse(data);
+                  if (parsed.text) {
+                    assistantContent += parsed.text;
+
+                    // Update assistant message with accumulated content
+                    setMessages((prev) =>
+                      prev.map((msg) =>
+                        msg.id === assistantMessageId
+                          ? { ...msg, content: assistantContent }
+                          : msg
+                      )
+                    );
+                  }
+                } catch (parseErr) {
+                  // Skip malformed JSON chunks (can happen with chunked transfer)
+                  console.warn("Skipping malformed SSE data:", data.substring(0, 50));
+                }
               }
             }
           }
+        } catch (streamErr) {
+          console.error("Stream reading error:", streamErr);
+          throw new Error("Failed to read AI response stream");
+        } finally {
+          reader.releaseLock();
         }
 
+        // Ensure we have content before finishing
+        if (!assistantContent.trim()) {
+          throw new Error("AI response was empty");
+        }
+
+        console.log(`✅ Received ${assistantContent.length} characters from AI`);
         setIsLoading(false);
       } catch (err) {
         console.error("Chat error:", err);
