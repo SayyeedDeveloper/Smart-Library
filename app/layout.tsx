@@ -32,7 +32,7 @@ export default function RootLayout({
         className={`${inter.variable} ${nunito.variable} antialiased`}
       >
         {children}
-        <SpeedInsights />      ]
+        <SpeedInsights />
       </body>
     </html>
   );
