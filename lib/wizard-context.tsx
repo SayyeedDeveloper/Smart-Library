@@ -5,8 +5,9 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { WizardData, Step, STEPS, BookRecommendation } from "@/types";
 import { getRecommendations } from "./recommendation-engine";
 
-// LocalStorage key
+// LocalStorage keys
 const STORAGE_KEY = "smart-lib-wizard";
+const CHAT_STORAGE_KEY = "smart-lib-chat";
 
 // Initial wizard data
 const initialWizardData: WizardData = {
@@ -149,14 +150,20 @@ function WizardProviderInner({ children }: { children: React.ReactNode }) {
     }
   }, [currentStep, goToStep]);
 
-  // Reset wizard to initial state
+  // Reset wizard to initial state and redirect to home
   const resetWizard = useCallback(() => {
+    // Clear all wizard data
     setWizardData(initialWizardData);
     setCompletedSteps([]);
     setRecommendations([]);
+
+    // Clear all localStorage data
     localStorage.removeItem(STORAGE_KEY);
-    goToStep("name");
-  }, [goToStep]);
+    localStorage.removeItem(CHAT_STORAGE_KEY);
+
+    // Redirect to home page
+    router.push("/");
+  }, [router]);
 
   const value: WizardContextType = {
     wizardData,

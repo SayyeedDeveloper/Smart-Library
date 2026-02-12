@@ -35,30 +35,44 @@ function WizardContent() {
   // Get the current step component
   const StepComponent = STEP_COMPONENTS[currentStep];
 
-  return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-5xl">
-        {/* Progress Indicator */}
-        <WizardProgress
-          currentStep={currentStep}
-          completedSteps={completedSteps}
-        />
+  // Use wider container for results page to fit chat + books
+  const containerWidth = currentStep === "results" ? "max-w-[1600px]" : "max-w-5xl";
 
-        {/* Main Content */}
-        <div className="bg-card rounded-lg shadow-sm border p-8 my-8">
+  return (
+    <>
+      {currentStep === "results" ? (
+        // Results page: Full-screen layout with sidebar
+        <div className="relative">
+          {/* Main Content - Full Screen */}
           <StepComponent />
         </div>
+      ) : (
+        // Other steps: Traditional contained layout
+        <div className="min-h-screen bg-background">
+          <div className={`container mx-auto px-4 py-8 ${containerWidth}`}>
+            {/* Progress Indicator */}
+            <WizardProgress
+              currentStep={currentStep}
+              completedSteps={completedSteps}
+            />
 
-        {/* Navigation */}
-        <WizardNavigation
-          currentStep={currentStep}
-          canGoNext={isStepValid(currentStep)}
-          onNext={nextStep}
-          onPrevious={previousStep}
-          onReset={resetWizard}
-        />
-      </div>
-    </div>
+            {/* Main Content */}
+            <div className="bg-card rounded-lg shadow-sm border p-8 my-8">
+              <StepComponent />
+            </div>
+
+            {/* Navigation */}
+            <WizardNavigation
+              currentStep={currentStep}
+              canGoNext={isStepValid(currentStep)}
+              onNext={nextStep}
+              onPrevious={previousStep}
+              onReset={resetWizard}
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

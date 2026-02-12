@@ -213,7 +213,7 @@ export const BOOKS: readonly Book[] = [
     id: "17",
     title: "The Graveyard Book",
     author: "Neil Gaiman",
-    coverUrl: "https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?w=200&h=300&fit=crop",
+    coverUrl: "/books/TheGraveyardBook_Hardcover.jpg",
     ageGroup: ["11-13", "14-17"],
     interests: ["mystery", "magic", "adventure"],
     genres: ["fantasy", "mystery-thriller"],

@@ -5,13 +5,18 @@ import { useWizard } from "@/lib/wizard-context";
 import { BookCard } from "@/components/shared/book-card";
 import { FilterChips } from "@/components/shared/filter-chips";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Sparkles } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ChatContainer } from "@/components/chat/chat-container";
+import { WizardProgress } from "@/components/wizard/wizard-progress";
+import { Button } from "@/components/ui/button";
+import { Sparkles, BookOpen, MessageCircle, ArrowLeft, RotateCcw } from "lucide-react";
 
 type SortOption = "relevance" | "newest" | "shortest" | "longest";
 
 export function ResultsStep() {
-  const { wizardData, recommendations, updateField } = useWizard();
+  const { wizardData, recommendations, updateField, completedSteps, currentStep, previousStep, resetWizard } = useWizard();
   const [sortBy, setSortBy] = useState<SortOption>("relevance");
+  const [activeTab, setActiveTab] = useState<string>("books");
 
   // Handle removing interest filter
   const handleRemoveInterest = (interest: string) => {
@@ -41,60 +46,43 @@ export function ResultsStep() {
     }
   });
 
-  return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="text-center space-y-2">
-        <div className="flex items-center justify-center gap-2">
-          <Sparkles className="w-8 h-8 text-primary" />
-          <h1 className="font-heading text-3xl font-bold text-foreground">
-            Your Book Recommendations
-          </h1>
-        </div>
-        <p className="text-muted-foreground">
-          {recommendations.length > 0
-            ? `We found ${recommendations.length} perfect ${recommendations.length === 1 ? 'book' : 'books'} for ${wizardData.name}!`
-            : `We couldn't find exact matches, but here are some great books for you!`}
-        </p>
-      </div>
+  // Books content component (reusable for both layouts)
+  const BooksContent = () => (
+    <div className="space-y-4">
+      {/* Active Filters */}
+      <FilterChips
+        wizardData={wizardData}
+        onRemoveInterest={handleRemoveInterest}
+        onRemoveGenre={handleRemoveGenre}
+      />
 
-      {/* Filters & Sort */}
-      <div className="max-w-4xl mx-auto space-y-4">
-        {/* Active Filters */}
-        <FilterChips
-          wizardData={wizardData}
-          onRemoveInterest={handleRemoveInterest}
-          onRemoveGenre={handleRemoveGenre}
-        />
-
-        {/* Sort Dropdown */}
-        {recommendations.length > 1 && (
-          <div className="flex items-center justify-between">
-            <p className="text-sm font-medium text-muted-foreground">
-              {recommendations.length} {recommendations.length === 1 ? 'result' : 'results'}
-            </p>
-            <div className="flex items-center gap-2">
-              <label htmlFor="sort" className="text-sm text-muted-foreground">
-                Sort by:
-              </label>
-              <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
-                <SelectTrigger id="sort" className="w-[160px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="relevance">Best Match</SelectItem>
-                  <SelectItem value="newest">Newest First</SelectItem>
-                  <SelectItem value="shortest">Shortest First</SelectItem>
-                  <SelectItem value="longest">Longest First</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+      {/* Sort Dropdown */}
+      {recommendations.length > 1 && (
+        <div className="flex items-center justify-between">
+          <p className="text-sm font-medium text-muted-foreground">
+            {recommendations.length} {recommendations.length === 1 ? 'result' : 'results'}
+          </p>
+          <div className="flex items-center gap-2">
+            <label htmlFor="sort" className="text-sm text-muted-foreground">
+              Sort by:
+            </label>
+            <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
+              <SelectTrigger id="sort" className="w-[160px]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="relevance">Best Match</SelectItem>
+                <SelectItem value="newest">Newest First</SelectItem>
+                <SelectItem value="shortest">Shortest First</SelectItem>
+                <SelectItem value="longest">Longest First</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Book List */}
-      <div className="max-w-4xl mx-auto space-y-4">
+      <div className="space-y-4">
         {sortedRecommendations.length > 0 ? (
           sortedRecommendations.map((rec) => (
             <BookCard key={rec.book.id} recommendation={rec} />
@@ -106,6 +94,147 @@ export function ResultsStep() {
             </p>
           </div>
         )}
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen">
+      {/* Mobile/Tablet: Tabbed Interface (< 1024px) */}
+      <div className="lg:hidden pb-24">
+        <div className="container mx-auto px-4 max-w-5xl">
+          {/* Progress Indicator */}
+          <div className="py-6">
+            <WizardProgress
+              currentStep={currentStep}
+              completedSteps={completedSteps}
+            />
+          </div>
+
+          {/* Header */}
+          <div className="text-center space-y-2 py-8">
+            <div className="flex items-center justify-center gap-2">
+              <Sparkles className="w-8 h-8 text-primary" />
+              <h1 className="font-heading text-3xl font-bold text-foreground">
+                Your Book Recommendations
+              </h1>
+            </div>
+            <p className="text-muted-foreground">
+              {recommendations.length > 0
+                ? `We found ${recommendations.length} perfect ${recommendations.length === 1 ? 'book' : 'books'} for ${wizardData.name}!`
+                : `We couldn't find exact matches, but here are some great books for you!`}
+            </p>
+          </div>
+
+          {/* Tabs */}
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-6">
+              <TabsTrigger value="books" className="flex items-center gap-2">
+                <BookOpen className="w-4 h-4" />
+                <span className="hidden sm:inline">Recommendations</span>
+                <span className="sm:hidden">Books</span>
+              </TabsTrigger>
+              <TabsTrigger value="chat" className="flex items-center gap-2">
+                <MessageCircle className="w-4 h-4" />
+                <span className="hidden sm:inline">Ask AI</span>
+                <span className="sm:hidden">Chat</span>
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="books" className="mt-0">
+              <BooksContent />
+            </TabsContent>
+
+            <TabsContent value="chat" className="mt-0">
+              <div className="h-[calc(100vh-320px)] min-h-[500px]">
+                <ChatContainer wizardData={wizardData} recommendations={recommendations} />
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+
+        {/* Fixed Navigation at Bottom */}
+        <div className="fixed bottom-0 left-0 right-0 bg-background border-t shadow-lg z-20">
+          <div className="container mx-auto px-4 py-4 max-w-5xl">
+            <div className="flex items-center justify-between">
+              <Button
+                onClick={previousStep}
+                variant="outline"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back
+              </Button>
+              <Button
+                onClick={resetWizard}
+                variant="outline"
+              >
+                <RotateCcw className="w-4 h-4 mr-2" />
+                Start Over
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop: Sidebar Layout (>= 1024px) */}
+      <div className="hidden lg:flex lg:min-h-screen">
+        {/* Main Content Area - Scrollable */}
+        <main className="flex-1 overflow-y-auto">
+          <div className="container mx-auto px-8 py-12 max-w-5xl">
+            {/* Progress Indicator */}
+            <div className="mb-8">
+              <WizardProgress
+                currentStep={currentStep}
+                completedSteps={completedSteps}
+              />
+            </div>
+
+            {/* Header */}
+            <div className="text-center space-y-3 mb-12">
+              <div className="flex items-center justify-center gap-2">
+                <Sparkles className="w-10 h-10 text-primary" />
+                <h1 className="font-heading text-4xl font-bold text-foreground">
+                  Your Book Recommendations
+                </h1>
+              </div>
+              <p className="text-lg text-muted-foreground">
+                {recommendations.length > 0
+                  ? `We found ${recommendations.length} perfect ${recommendations.length === 1 ? 'book' : 'books'} for ${wizardData.name}!`
+                  : `We couldn't find exact matches, but here are some great books for you!`}
+              </p>
+            </div>
+
+            {/* Books Content */}
+            <BooksContent />
+
+            {/* Navigation */}
+            <div className="flex items-center justify-between pt-12 border-t mt-12">
+              <Button
+                onClick={previousStep}
+                variant="outline"
+                size="lg"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back
+              </Button>
+              <Button
+                onClick={resetWizard}
+                variant="outline"
+                size="lg"
+              >
+                <RotateCcw className="w-4 h-4 mr-2" />
+                Start Over
+              </Button>
+            </div>
+          </div>
+        </main>
+
+        {/* Chat Sidebar - Fixed */}
+        <aside className="w-[480px] border-l bg-muted/20 flex-shrink-0">
+          <div className="h-screen sticky top-0 flex flex-col">
+            <ChatContainer wizardData={wizardData} recommendations={recommendations} />
+          </div>
+        </aside>
       </div>
     </div>
   );
