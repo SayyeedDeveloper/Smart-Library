@@ -22,12 +22,12 @@ export default function Home() {
         <div className="max-w-4xl mx-auto text-center space-y-8">
           {/* Logo/Brand with Robot */}
           <div className="flex items-center justify-center gap-3 relative">
-            <div className="absolute -left-20 top-1/2 -translate-y-1/2 hidden lg:block animate-in zoom-in duration-700 delay-200">
+            <div className="absolute -left-32 top-1/2 -translate-y-1/2 hidden lg:block animate-in zoom-in duration-700 delay-200">
               <Image
                 src="/robot/Future_Robot_3d 1.png"
                 alt="Robot mascot"
-                width={80}
-                height={80}
+                width={120}
+                height={120}
                 className="object-contain drop-shadow-2xl animate-bounce"
                 style={{ animationDuration: '3s' }}
               />
@@ -36,12 +36,12 @@ export default function Home() {
             <h1 className="font-heading text-4xl md:text-5xl font-bold text-foreground">
               Smart Library
             </h1>
-            <div className="absolute -right-20 top-1/2 -translate-y-1/2 hidden lg:block animate-in zoom-in duration-700 delay-300">
+            <div className="absolute -right-32 top-1/2 -translate-y-1/2 hidden lg:block animate-in zoom-in duration-700 delay-300">
               <Image
                 src="/robot/AI_Robot_04_3d 1.png"
                 alt="Robot mascot"
-                width={80}
-                height={80}
+                width={120}
+                height={120}
                 className="object-contain drop-shadow-2xl animate-bounce"
                 style={{ animationDuration: '3s', animationDelay: '0.5s' }}
               />
@@ -53,15 +53,15 @@ export default function Home() {
             <Image
               src="/robot/Future_Robot_3d 1.png"
               alt="Robot mascot"
-              width={60}
-              height={60}
+              width={90}
+              height={90}
               className="object-contain drop-shadow-xl"
             />
             <Image
               src="/robot/AI_Robot_04_3d 1.png"
               alt="Robot mascot"
-              width={60}
-              height={60}
+              width={90}
+              height={90}
               className="object-contain drop-shadow-xl"
             />
           </div>

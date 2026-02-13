@@ -585,6 +585,45 @@ export const BOOKS: readonly Book[] = [
     pageCount: 40,
     publishedYear: 2006,
     description: "A short classic story in Uzbek about loyalty and kindness, centered on a child and a devoted dog, designed to be read in one or two sittings."
+  },
+  {
+    id: "51",
+    title: "The Jungle Book",
+    author: "Rudyard Kipling",
+    coverUrl: "/books/The_Jungle_Book.jpg",
+    ageGroup: ["8-10", "11-13"],
+    interests: ["adventure", "animals", "nature"],
+    genres: ["adventure", "fantasy"],
+    languages: ["english"],
+    pageCount: 326,
+    publishedYear: 1894,
+    description: "A collection of stories set in the Indian jungle featuring Mowgli, a boy raised by wolves, and memorable animal characters like Baloo the bear, Bagheera the panther, and Shere Khan the tiger. These timeless tales blend adventure with moral lessons about courage, friendship, and finding one's place in the world."
+  },
+  {
+    id: "52",
+    title: "The Tale of Peter Rabbit",
+    author: "Beatrix Potter",
+    coverUrl: "/books/peter_rabbit.jpg",
+    ageGroup: ["5-7"],
+    interests: ["animals", "nature", "family"],
+    genres: ["realistic-fiction"],
+    languages: ["english"],
+    pageCount: 72,
+    publishedYear: 1902,
+    description: "Follow mischievous young Peter Rabbit as he disobeys his mother and sneaks into Mr. McGregor's garden for an exciting and dangerous adventure. This beloved classic has delighted children for over a century with its charming illustrations and gentle lessons about consequences and listening to parents."
+  },
+  {
+    id: "53",
+    title: "Winnie-the-Pooh",
+    author: "A.A. Milne",
+    coverUrl: "/books/winnie_the_pooh.jpg",
+    ageGroup: ["5-7", "8-10"],
+    interests: ["friendship", "animals", "family"],
+    genres: ["fantasy", "adventure"],
+    languages: ["english"],
+    pageCount: 161,
+    publishedYear: 1926,
+    description: "Join lovable teddy bear Winnie-the-Pooh and his friends Christopher Robin, Piglet, Eeyore, and Tigger in the enchanting Hundred Acre Wood. These gentle, humorous stories celebrate friendship, imagination, and the simple joys of life through charming adventures that have captured hearts for generations."
   }
 
 ] as const;
