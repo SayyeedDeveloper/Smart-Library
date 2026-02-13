@@ -11,26 +11,28 @@ import { WizardProgress } from "@/components/wizard/wizard-progress";
 import { Button } from "@/components/ui/button";
 import { Sparkles, BookOpen, MessageCircle, ArrowLeft, RotateCcw } from "lucide-react";
 import Image from "next/image";
+import { WizardData, BookRecommendation } from "@/types";
 
 type SortOption = "relevance" | "newest" | "shortest" | "longest";
 
-export function ResultsStep() {
-  const { wizardData, recommendations, updateField, completedSteps, currentStep, previousStep, resetWizard } = useWizard();
-  const [sortBy, setSortBy] = useState<SortOption>("relevance");
-  const [activeTab, setActiveTab] = useState<string>("books");
+// Books content component (reusable for both layouts)
+interface BooksContentProps {
+  wizardData: WizardData;
+  recommendations: BookRecommendation[];
+  sortBy: SortOption;
+  onRemoveInterest: (interest: string) => void;
+  onRemoveGenre: (genre: string) => void;
+  onSortChange: (value: SortOption) => void;
+}
 
-  // Handle removing interest filter
-  const handleRemoveInterest = (interest: string) => {
-    const newInterests = wizardData.interests.filter(i => i !== interest);
-    updateField("interests", newInterests);
-  };
-
-  // Handle removing genre filter
-  const handleRemoveGenre = (genre: string) => {
-    const newGenres = wizardData.genres.filter(g => g !== genre);
-    updateField("genres", newGenres);
-  };
-
+function BooksContent({
+  wizardData,
+  recommendations,
+  sortBy,
+  onRemoveInterest,
+  onRemoveGenre,
+  onSortChange
+}: BooksContentProps) {
   // Sort recommendations
   const sortedRecommendations = [...recommendations].sort((a, b) => {
     switch (sortBy) {
@@ -47,14 +49,13 @@ export function ResultsStep() {
     }
   });
 
-  // Books content component (reusable for both layouts)
-  const BooksContent = () => (
+  return (
     <div className="space-y-4">
       {/* Active Filters */}
       <FilterChips
         wizardData={wizardData}
-        onRemoveInterest={handleRemoveInterest}
-        onRemoveGenre={handleRemoveGenre}
+        onRemoveInterest={onRemoveInterest}
+        onRemoveGenre={onRemoveGenre}
       />
 
       {/* Sort Dropdown */}
@@ -67,7 +68,7 @@ export function ResultsStep() {
             <label htmlFor="sort" className="text-sm text-muted-foreground">
               Sort by:
             </label>
-            <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
+            <Select value={sortBy} onValueChange={(value) => onSortChange(value as SortOption)}>
               <SelectTrigger id="sort" className="w-[160px]">
                 <SelectValue />
               </SelectTrigger>
@@ -98,6 +99,24 @@ export function ResultsStep() {
       </div>
     </div>
   );
+}
+
+export function ResultsStep() {
+  const { wizardData, recommendations, updateField, completedSteps, currentStep, previousStep, resetWizard } = useWizard();
+  const [sortBy, setSortBy] = useState<SortOption>("relevance");
+  const [activeTab, setActiveTab] = useState<string>("books");
+
+  // Handle removing interest filter
+  const handleRemoveInterest = (interest: string) => {
+    const newInterests = wizardData.interests.filter(i => i !== interest);
+    updateField("interests", newInterests);
+  };
+
+  // Handle removing genre filter
+  const handleRemoveGenre = (genre: string) => {
+    const newGenres = wizardData.genres.filter(g => g !== genre);
+    updateField("genres", newGenres);
+  };
 
   return (
     <div className="min-h-screen bg-background relative">
@@ -175,7 +194,14 @@ export function ResultsStep() {
             </TabsList>
 
             <TabsContent value="books" className="mt-0">
-              <BooksContent />
+              <BooksContent
+                wizardData={wizardData}
+                recommendations={recommendations}
+                sortBy={sortBy}
+                onRemoveInterest={handleRemoveInterest}
+                onRemoveGenre={handleRemoveGenre}
+                onSortChange={setSortBy}
+              />
             </TabsContent>
 
             <TabsContent value="chat" className="mt-0">
@@ -262,7 +288,14 @@ export function ResultsStep() {
             </div>
 
             {/* Books Content */}
-            <BooksContent />
+            <BooksContent
+              wizardData={wizardData}
+              recommendations={recommendations}
+              sortBy={sortBy}
+              onRemoveInterest={handleRemoveInterest}
+              onRemoveGenre={handleRemoveGenre}
+              onSortChange={setSortBy}
+            />
 
             {/* Navigation */}
             <div className="flex items-center justify-between pt-12 border-t mt-12">
@@ -274,6 +307,14 @@ export function ResultsStep() {
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back
               </Button>
+              <div className="text-center space-y-1 py-4">
+                <p className="text-sm font-medium text-foreground">
+                  Made with ❤️ by English teachers team
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Andijan region, Khojaabad district, School №2
+                </p>
+              </div>
               <Button
                 onClick={resetWizard}
                 variant="outline"
