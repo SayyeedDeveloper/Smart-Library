@@ -2,6 +2,7 @@ import React from "react";
 import { useWizard } from "@/lib/wizard-context";
 import { OptionCard } from "@/components/shared/option-card";
 import { GENRES } from "@/types";
+import { RobotMascot } from "@/components/shared/robot-mascot";
 
 export function GenreStep() {
   const { wizardData, updateField } = useWizard();
@@ -17,9 +18,14 @@ export function GenreStep() {
 
   return (
     <div className="space-y-6">
+      {/* Friendly Robot Mascot */}
+      <div className="flex justify-center">
+        <RobotMascot variant="robot" size="lg" />
+      </div>
+
       <div className="text-center space-y-2">
         <h1 className="font-heading text-3xl font-bold text-foreground">
-          What genres do you like?
+          What genres do you like? 📖
         </h1>
         <p className="text-muted-foreground">
           Pick your favorite types of stories. You can choose more than one!

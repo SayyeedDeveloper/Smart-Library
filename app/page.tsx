@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { BookOpen, Sparkles, Heart, Star } from "lucide-react";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -9,12 +10,50 @@ export default function Home() {
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="max-w-4xl mx-auto text-center space-y-8">
-          {/* Logo/Brand */}
-          <div className="flex items-center justify-center gap-3">
+          {/* Logo/Brand with Robot */}
+          <div className="flex items-center justify-center gap-3 relative">
+            <div className="absolute -left-20 top-1/2 -translate-y-1/2 hidden lg:block animate-in zoom-in duration-700 delay-200">
+              <Image
+                src="/robot/Future_Robot_3d 1.png"
+                alt="Robot mascot"
+                width={80}
+                height={80}
+                className="object-contain drop-shadow-2xl animate-bounce"
+                style={{ animationDuration: '3s' }}
+              />
+            </div>
             <BookOpen className="w-12 h-12 text-primary" />
             <h1 className="font-heading text-4xl md:text-5xl font-bold text-foreground">
               Smart Library
             </h1>
+            <div className="absolute -right-20 top-1/2 -translate-y-1/2 hidden lg:block animate-in zoom-in duration-700 delay-300">
+              <Image
+                src="/robot/AI_Robot_04_3d 1.png"
+                alt="Robot mascot"
+                width={80}
+                height={80}
+                className="object-contain drop-shadow-2xl animate-bounce"
+                style={{ animationDuration: '3s', animationDelay: '0.5s' }}
+              />
+            </div>
+          </div>
+
+          {/* Mobile Robot - Shows on smaller screens */}
+          <div className="lg:hidden flex justify-center gap-8 animate-in zoom-in duration-700">
+            <Image
+              src="/robot/Future_Robot_3d 1.png"
+              alt="Robot mascot"
+              width={60}
+              height={60}
+              className="object-contain drop-shadow-xl"
+            />
+            <Image
+              src="/robot/AI_Robot_04_3d 1.png"
+              alt="Robot mascot"
+              width={60}
+              height={60}
+              className="object-contain drop-shadow-xl"
+            />
           </div>
 
           {/* Headline */}
@@ -22,7 +61,7 @@ export default function Home() {
             <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
               Discover Your Next
               <br />
-              <span className="text-primary">Favorite Book</span>
+              <span className="text-primary">Favorite Book</span> 📚✨
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
               Answer a few fun questions and we'll recommend the perfect books tailored just for you!

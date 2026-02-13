@@ -1,9 +1,10 @@
 import React from "react";
 import { ChatMessage as ChatMessageType } from "@/lib/types/chat";
 import { cn } from "@/lib/utils";
-import { Bot, User } from "lucide-react";
+import { User } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import Image from "next/image";
 
 interface ChatMessageProps {
   message: ChatMessageType;
@@ -23,13 +24,19 @@ export function ChatMessage({ message }: ChatMessageProps) {
       <div
         className={cn(
           "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center",
-          isUser ? "bg-primary" : "bg-secondary"
+          isUser ? "bg-gradient-to-br from-primary to-primary/80 shadow-sm" : "bg-gradient-to-br from-secondary/30 to-accent/20"
         )}
       >
         {isUser ? (
           <User className="w-5 h-5 text-white" />
         ) : (
-          <Bot className="w-5 h-5 text-foreground" />
+          <Image
+            src="/robot/AI_Chat_02_3d 1.png"
+            alt="Robot"
+            width={32}
+            height={32}
+            className="object-contain"
+          />
         )}
       </div>
 

@@ -2,6 +2,7 @@ import React from "react";
 import { useWizard } from "@/lib/wizard-context";
 import { OptionCard } from "@/components/shared/option-card";
 import { LANGUAGES } from "@/types";
+import { RobotMascot } from "@/components/shared/robot-mascot";
 
 export function LanguageStep() {
   const { wizardData, updateField } = useWizard();
@@ -12,9 +13,14 @@ export function LanguageStep() {
 
   return (
     <div className="space-y-6">
+      {/* Friendly Robot Mascot */}
+      <div className="flex justify-center">
+        <RobotMascot variant="future" size="lg" />
+      </div>
+
       <div className="text-center space-y-2">
         <h1 className="font-heading text-3xl font-bold text-foreground">
-          What language?
+          What language? 🌍
         </h1>
         <p className="text-muted-foreground">
           Choose the language you'd like to read in.

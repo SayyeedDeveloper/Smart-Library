@@ -1,6 +1,7 @@
 import React from "react";
 import { Card } from "@/components/ui/card";
-import { Sparkles, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
+import Image from "next/image";
 
 interface ChatWelcomeCardProps {
   userName: string;
@@ -18,16 +19,23 @@ export function ChatWelcomeCard({ userName, onSuggestedQuestion }: ChatWelcomeCa
   return (
     <div className="space-y-4 px-4 pb-4">
       {/* Welcome message */}
-      <div className="text-center space-y-2 py-8">
-        <div className="flex items-center justify-center gap-2">
-          <Sparkles className="w-6 h-6 text-primary" />
-          <h3 className="font-heading text-lg font-semibold">
-            Ask About Your Books
-          </h3>
+      <div className="text-center space-y-3 py-8">
+        <div className="w-24 h-24 mx-auto relative animate-in zoom-in duration-500">
+          <Image
+            src="/robot/AI_Robot_3d 1.png"
+            alt="Book Buddy Robot"
+            width={96}
+            height={96}
+            className="object-contain drop-shadow-xl"
+          />
         </div>
-        <p className="text-sm text-muted-foreground max-w-sm mx-auto">
-          Hi {userName}! I'm here to help you explore your book recommendations.
-          Ask me anything!
+        <h3 className="font-heading text-2xl font-bold text-foreground flex items-center justify-center gap-2">
+          Hi {userName}!
+          <span className="inline-block animate-bounce">👋</span>
+        </h3>
+        <p className="text-sm text-muted-foreground max-w-sm mx-auto leading-relaxed">
+          I'm <span className="font-semibold text-primary">Book Buddy</span>, your friendly AI reading guide! 🤖✨
+          <br />Ask me anything about your books!
         </p>
       </div>
 

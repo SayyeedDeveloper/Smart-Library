@@ -2,6 +2,7 @@ import React from "react";
 import { useWizard } from "@/lib/wizard-context";
 import { OptionCard } from "@/components/shared/option-card";
 import { AGE_GROUPS } from "@/types";
+import { RobotMascot } from "@/components/shared/robot-mascot";
 
 export function AgeStep() {
   const { wizardData, updateField } = useWizard();
@@ -12,9 +13,14 @@ export function AgeStep() {
 
   return (
     <div className="space-y-6">
+      {/* Friendly Robot Mascot */}
+      <div className="flex justify-center">
+        <RobotMascot variant="wave" size="lg" />
+      </div>
+
       <div className="text-center space-y-2">
         <h1 className="font-heading text-3xl font-bold text-foreground">
-          How old are you?
+          How old are you? 🎂
         </h1>
         <p className="text-muted-foreground">
           This helps us find age-appropriate books just for you.

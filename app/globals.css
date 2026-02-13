@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Backgrounds */
-  --color-background: #ffffff;
+  /* Backgrounds - Clean light blue base */
+  --color-background: #f8fbff;
   --color-foreground: #001449;
 
-  /* Cards */
-  --color-card: #fafafa;
+  /* Cards - White with subtle transparency */
+  --color-card: rgba(255, 255, 255, 0.95);
   --color-card-foreground: #001449;
 
   /* Popover */
@@ -22,7 +22,7 @@
   --color-secondary-foreground: #002fb0;
 
   /* Muted */
-  --color-muted: #f0f0f0;
+  --color-muted: rgba(240, 240, 240, 0.8);
   --color-muted-foreground: #4a5568;
 
   /* Accent - light tint of #00268d */
@@ -53,7 +53,17 @@
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply text-foreground font-sans;
+    /* Clean, professional gradient - single color family (blues) */
+    background: linear-gradient(
+      180deg,
+      #f8fbff 0%,
+      #f0f6ff 50%,
+      #e8f1ff 100%
+    );
+    background-attachment: fixed;
+    min-height: 100vh;
   }
 }

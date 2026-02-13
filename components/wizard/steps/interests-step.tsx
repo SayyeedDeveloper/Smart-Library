@@ -2,6 +2,7 @@ import React from "react";
 import { useWizard } from "@/lib/wizard-context";
 import { OptionCard } from "@/components/shared/option-card";
 import { INTERESTS } from "@/types";
+import { RobotMascot } from "@/components/shared/robot-mascot";
 
 export function InterestsStep() {
   const { wizardData, updateField } = useWizard();
@@ -17,9 +18,14 @@ export function InterestsStep() {
 
   return (
     <div className="space-y-6">
+      {/* Friendly Robot Mascot */}
+      <div className="flex justify-center">
+        <RobotMascot variant="think" size="lg" />
+      </div>
+
       <div className="text-center space-y-2">
         <h1 className="font-heading text-3xl font-bold text-foreground">
-          What interests you?
+          What interests you? 🎯
         </h1>
         <p className="text-muted-foreground">
           Select all the topics that excite you. We'll find books that match!

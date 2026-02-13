@@ -10,6 +10,7 @@ import { ChatContainer } from "@/components/chat/chat-container";
 import { WizardProgress } from "@/components/wizard/wizard-progress";
 import { Button } from "@/components/ui/button";
 import { Sparkles, BookOpen, MessageCircle, ArrowLeft, RotateCcw } from "lucide-react";
+import Image from "next/image";
 
 type SortOption = "relevance" | "newest" | "shortest" | "longest";
 
@@ -111,17 +112,39 @@ export function ResultsStep() {
             />
           </div>
 
-          {/* Header */}
-          <div className="text-center space-y-2 py-8">
-            <div className="flex items-center justify-center gap-2">
-              <Sparkles className="w-8 h-8 text-primary" />
-              <h1 className="font-heading text-3xl font-bold text-foreground">
-                Your Book Recommendations
-              </h1>
+          {/* Header with Robot */}
+          <div className="text-center space-y-3 py-8">
+            <div className="flex items-center justify-center gap-4">
+              <div className="hidden sm:block animate-in zoom-in duration-700">
+                <Image
+                  src="/robot/AI_Robot_03_3d 1.png"
+                  alt="Success Robot"
+                  width={64}
+                  height={64}
+                  className="object-contain drop-shadow-xl animate-bounce"
+                  style={{ animationDuration: '2s' }}
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-8 h-8 text-primary animate-pulse" />
+                <h1 className="font-heading text-3xl font-bold text-foreground">
+                  Your Book Recommendations! 🎉
+                </h1>
+              </div>
+              <div className="hidden sm:block animate-in zoom-in duration-700 delay-150">
+                <Image
+                  src="/robot/AI_Chat_03_3d 1.png"
+                  alt="Success Robot"
+                  width={64}
+                  height={64}
+                  className="object-contain drop-shadow-xl animate-bounce"
+                  style={{ animationDuration: '2s', animationDelay: '0.3s' }}
+                />
+              </div>
             </div>
-            <p className="text-muted-foreground">
+            <p className="text-lg text-muted-foreground">
               {recommendations.length > 0
-                ? `We found ${recommendations.length} perfect ${recommendations.length === 1 ? 'book' : 'books'} for ${wizardData.name}!`
+                ? `✨ We found ${recommendations.length} perfect ${recommendations.length === 1 ? 'book' : 'books'} for ${wizardData.name}! ✨`
                 : `We couldn't find exact matches, but here are some great books for you!`}
             </p>
           </div>
@@ -189,17 +212,41 @@ export function ResultsStep() {
               />
             </div>
 
-            {/* Header */}
-            <div className="text-center space-y-3 mb-12">
-              <div className="flex items-center justify-center gap-2">
-                <Sparkles className="w-10 h-10 text-primary" />
-                <h1 className="font-heading text-4xl font-bold text-foreground">
-                  Your Book Recommendations
-                </h1>
+            {/* Header with Robots */}
+            <div className="text-center space-y-4 mb-12">
+              <div className="flex items-center justify-center gap-4">
+                <div className="animate-in zoom-in duration-700">
+                  <Image
+                    src="/robot/AI_Robot_03_3d 1.png"
+                    alt="Success Robot"
+                    width={80}
+                    height={80}
+                    className="object-contain drop-shadow-xl animate-bounce"
+                    style={{ animationDuration: '2s' }}
+                  />
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-10 h-10 text-primary animate-pulse" />
+                    <h1 className="font-heading text-4xl font-bold text-foreground">
+                      Your Books! 🎉
+                    </h1>
+                  </div>
+                </div>
+                <div className="animate-in zoom-in duration-700 delay-150">
+                  <Image
+                    src="/robot/AI_Chat_03_3d 1.png"
+                    alt="Success Robot"
+                    width={80}
+                    height={80}
+                    className="object-contain drop-shadow-xl animate-bounce"
+                    style={{ animationDuration: '2s', animationDelay: '0.3s' }}
+                  />
+                </div>
               </div>
               <p className="text-lg text-muted-foreground">
                 {recommendations.length > 0
-                  ? `We found ${recommendations.length} perfect ${recommendations.length === 1 ? 'book' : 'books'} for ${wizardData.name}!`
+                  ? `✨ We found ${recommendations.length} perfect ${recommendations.length === 1 ? 'book' : 'books'} for ${wizardData.name}! ✨`
                   : `We couldn't find exact matches, but here are some great books for you!`}
               </p>
             </div>
