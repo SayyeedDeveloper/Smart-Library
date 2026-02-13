@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Baloo_2, Quicksand } from "next/font/google";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ImagePreloader } from "@/components/shared/image-preloader";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body
         className={`${quicksand.variable} ${baloo2.variable} antialiased`}
       >
+        <ImagePreloader />
         {children}
         <SpeedInsights />
       </body>

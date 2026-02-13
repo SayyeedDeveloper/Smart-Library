@@ -1,11 +1,33 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { BookOpen, Sparkles, Heart, Star } from "lucide-react";
 import Image from "next/image";
+import { useState, useEffect } from "react";
+import { LoadingScreen } from "@/components/shared/loading-screen";
+import { ImagePreloader } from "@/components/shared/image-preloader";
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time for assets
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
   return (
+    <>
+      <ImagePreloader />
     <div className="min-h-screen bg-background relative overflow-hidden">
       {/* Floating decorative shapes - MORE & MORE VISIBLE */}
       <div className="pointer-events-none absolute -left-8 top-20 h-40 w-40 rounded-full bg-[#1d80dd]/30 blur-3xl" />
@@ -30,6 +52,7 @@ export default function Home() {
                 height={120}
                 className="object-contain drop-shadow-2xl animate-bounce"
                 style={{ animationDuration: '3s' }}
+                priority
               />
             </div>
             <BookOpen className="w-12 h-12 text-primary" />
@@ -44,6 +67,7 @@ export default function Home() {
                 height={120}
                 className="object-contain drop-shadow-2xl animate-bounce"
                 style={{ animationDuration: '3s', animationDelay: '0.5s' }}
+                priority
               />
             </div>
           </div>
@@ -56,6 +80,7 @@ export default function Home() {
               width={90}
               height={90}
               className="object-contain drop-shadow-xl"
+              priority
             />
             <Image
               src="/robot/AI_Robot_04_3d 1.png"
@@ -63,6 +88,7 @@ export default function Home() {
               width={90}
               height={90}
               className="object-contain drop-shadow-xl"
+              priority
             />
           </div>
 
@@ -134,5 +160,6 @@ export default function Home() {
         </div>
       </div>
     </div>
+    </>
   );
 }

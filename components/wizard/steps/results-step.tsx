@@ -152,6 +152,7 @@ export function ResultsStep() {
                   height={64}
                   className="object-contain drop-shadow-xl animate-bounce"
                   style={{ animationDuration: '2s' }}
+                  priority
                 />
               </div>
               <div className="flex items-center gap-2">
@@ -168,6 +169,7 @@ export function ResultsStep() {
                   height={64}
                   className="object-contain drop-shadow-xl animate-bounce"
                   style={{ animationDuration: '2s', animationDelay: '0.3s' }}
+                  priority
                 />
               </div>
             </div>
@@ -259,6 +261,7 @@ export function ResultsStep() {
                     height={80}
                     className="object-contain drop-shadow-xl animate-bounce"
                     style={{ animationDuration: '2s' }}
+                    priority
                   />
                 </div>
                 <div className="flex flex-col items-center gap-2">
@@ -277,6 +280,7 @@ export function ResultsStep() {
                     height={80}
                     className="object-contain drop-shadow-xl animate-bounce"
                     style={{ animationDuration: '2s', animationDelay: '0.3s' }}
+                    priority
                   />
                 </div>
               </div>
