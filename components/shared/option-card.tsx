@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -11,6 +12,7 @@ interface OptionCardProps {
   description?: string;
   selected: boolean;
   onSelect: (value: string) => void;
+  index?: number;
 }
 
 export function OptionCard({
@@ -20,6 +22,7 @@ export function OptionCard({
   description,
   selected,
   onSelect,
+  index = 0,
 }: OptionCardProps) {
   // Dynamically get the icon component
   const IconComponent = icon
@@ -40,20 +43,28 @@ export function OptionCard({
   };
 
   return (
-    <Card
-      className={cn(
-        "relative cursor-pointer transition-all duration-200",
-        "hover:shadow-md active:scale-[0.98]",
-        "p-4 flex items-center gap-3",
-        selected && "border-2 border-primary bg-primary/10"
-      )}
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
-      tabIndex={0}
-      role="checkbox"
-      aria-checked={selected}
-      aria-label={`${label}${description ? `: ${description}` : ''}`}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05 }}
+      whileHover={{ scale: 1.05, rotate: 1 }}
+      whileTap={{ scale: 0.95 }}
     >
+      <Card
+        className={cn(
+          "relative cursor-pointer transition-all duration-300",
+          "hover:shadow-xl",
+          "p-5 flex items-center gap-3 rounded-2xl",
+          "glass-card-strong border-2",
+          selected ? "border-primary bg-primary/20 shadow-lg shadow-primary/30" : "border-border"
+        )}
+        onClick={handleClick}
+        onKeyDown={handleKeyDown}
+        tabIndex={0}
+        role="checkbox"
+        aria-checked={selected}
+        aria-label={`${label}${description ? `: ${description}` : ''}`}
+      >
       {/* Icon */}
       {IconComponent && (
         <div className={cn(
@@ -81,8 +92,9 @@ export function OptionCard({
 
       {/* Check icon */}
       {selected && (
-        <Check className="flex-shrink-0 w-5 h-5 text-primary ml-auto" />
+        <Check className="flex-shrink-0 w-6 h-6 text-primary ml-auto animate-pop" />
       )}
     </Card>
+    </motion.div>
   );
 }

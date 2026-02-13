@@ -1,33 +1,45 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Backgrounds - Clean light blue base */
-  --color-background: #f8fbff;
-  --color-foreground: #001449;
+  /* Backgrounds */
+  --color-background: #fafcff;
+  --color-foreground: #1a2332;
 
   /* Cards - White with subtle transparency */
   --color-card: rgba(255, 255, 255, 0.95);
-  --color-card-foreground: #001449;
+  --color-card-foreground: #1a2332;
 
   /* Popover */
   --color-popover: #ffffff;
-  --color-popover-foreground: #001449;
+  --color-popover-foreground: #1a2332;
 
-  /* Primary - #0038d2 */
-  --color-primary: #0038d2;
+  /* Primary - Blue (playful, energetic) */
+  --color-primary: #1d80dd;
   --color-primary-foreground: #ffffff;
 
-  /* Secondary - light tint of #002fb0 */
-  --color-secondary: #cce0ff;
-  --color-secondary-foreground: #002fb0;
+  /* Secondary - Orange (warm, friendly) */
+  --color-secondary: #ff9f40;
+  --color-secondary-foreground: #ffffff;
 
   /* Muted */
   --color-muted: rgba(240, 240, 240, 0.8);
-  --color-muted-foreground: #4a5568;
+  --color-muted-foreground: #64748b;
 
-  /* Accent - light tint of #00268d */
-  --color-accent: #d9e6ff;
-  --color-accent-foreground: #00268d;
+  /* Accent - Yellow (bright, cheerful) */
+  --color-accent: #f7d94c;
+  --color-accent-foreground: #1a2332;
+
+  /* Pink - Fun color for variety */
+  --color-pink: #d85085;
+  --color-pink-foreground: #ffffff;
+
+  /* Pastel backgrounds for cards */
+  --color-teal-light: #d4f1f9;
+  --color-orange-light: #ffead4;
+  --color-yellow-light: #fef5d4;
+  --color-pink-light: #fce4ec;
+  --color-purple-light: #f3e5f5;
+  --color-blue-light: #e3f2fd;
 
   /* Destructive */
   --color-destructive: #ef4444;
@@ -36,17 +48,17 @@
   /* Borders */
   --color-border: #e2e8f0;
   --color-input: #e2e8f0;
-  --color-ring: #0038d2;
+  --color-ring: #4db8b8;
 
   /* Typography */
-  --font-sans: var(--font-inter);
-  --font-heading: var(--font-nunito);
+  --font-sans: var(--font-quicksand);
+  --font-heading: var(--font-baloo2);
 
-  /* Radius */
-  --radius: 0.75rem;
-  --radius-lg: calc(0.75rem - 2px);
-  --radius-md: calc(0.75rem - 4px);
-  --radius-sm: calc(0.75rem - 6px);
+  /* Radius - More rounded! */
+  --radius: 1rem;
+  --radius-lg: calc(1rem + 2px);
+  --radius-md: calc(1rem - 2px);
+  --radius-sm: calc(1rem - 4px);
 }
 
 @layer base {
@@ -54,16 +66,75 @@
     @apply border-border;
   }
 
+  html {
+    overflow-x: hidden;
+  }
+
   body {
     @apply text-foreground font-sans;
-    /* Clean, professional gradient - single color family (blues) */
+    /* Vibrant blue gradient - perfect for glassmorphism */
     background: linear-gradient(
-      180deg,
-      #f8fbff 0%,
-      #f0f6ff 50%,
-      #e8f1ff 100%
+      135deg,
+      #b3d9ff 0%,
+      #8ec5ff 25%,
+      #5aa3f0 50%,
+      #3b8ee6 75%,
+      #1d80dd 100%
     );
     background-attachment: fixed;
     min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Glassmorphism Effect */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  }
+
+  .glass-card-strong {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  }
+
+  .glass-card-subtle {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.08);
+  }
+
+  /* Custom Animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+  }
+
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+  }
+
+  @keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-wiggle {
+    animation: wiggle 1s ease-in-out infinite;
+  }
+
+  .animate-pop {
+    animation: pop 0.3s ease-in-out;
   }
 }

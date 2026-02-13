@@ -9,7 +9,7 @@ interface ChatHeaderProps {
 
 export function ChatHeader({ bookCount }: ChatHeaderProps) {
   return (
-    <div className="border-b bg-gradient-to-r from-primary/5 via-secondary/10 to-accent/5 px-4 py-3">
+    <div className="border-b border-white/20 glass-card px-4 py-3 backdrop-blur-xl">
       <div className="flex items-center gap-3">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center p-1 relative overflow-hidden">
           <Image

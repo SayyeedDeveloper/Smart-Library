@@ -49,10 +49,10 @@ export function ChatWelcomeCard({ userName, onSuggestedQuestion }: ChatWelcomeCa
           {SUGGESTED_QUESTIONS.map((question) => (
             <Card
               key={question}
-              className="p-3 cursor-pointer hover:bg-primary/5 hover:border-primary transition-colors"
+              className="glass-card-strong p-3 cursor-pointer hover:border-primary hover:shadow-lg hover:scale-[1.02] transition-all duration-300 border-white/30"
               onClick={() => onSuggestedQuestion(question)}
             >
-              <p className="text-sm text-foreground">{question}</p>
+              <p className="text-sm text-foreground font-medium">{question}</p>
             </Card>
           ))}
         </div>

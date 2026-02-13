@@ -48,7 +48,15 @@ function WizardContent() {
         </div>
       ) : (
         // Other steps: Traditional contained layout
-        <div className="min-h-screen bg-background">
+        <div className="min-h-screen bg-background relative overflow-hidden">
+          {/* Floating decorative shapes - MORE & MORE VISIBLE */}
+          <div className="pointer-events-none absolute -left-4 top-10 h-32 w-32 rounded-full bg-[#1d80dd]/35 blur-2xl" />
+          <div className="pointer-events-none absolute -right-8 top-32 h-40 w-40 rounded-full bg-[#ff9f40]/30 blur-3xl" />
+          <div className="pointer-events-none absolute left-1/3 bottom-20 h-28 w-28 rounded-full bg-[#f7d94c]/40 blur-2xl" />
+          <div className="pointer-events-none absolute right-1/4 top-64 h-24 w-24 rounded-full bg-[#d85085]/35 blur-xl" />
+          <div className="pointer-events-none absolute left-1/2 bottom-40 h-32 w-32 rounded-full bg-[#1d80dd]/30 blur-2xl" />
+          <div className="pointer-events-none absolute -right-4 bottom-32 h-28 w-28 rounded-full bg-[#ff9f40]/35 blur-xl" />
+
           <div className={`container mx-auto px-4 py-8 ${containerWidth}`}>
             {/* Progress Indicator */}
             <WizardProgress
@@ -56,8 +64,8 @@ function WizardContent() {
               completedSteps={completedSteps}
             />
 
-            {/* Main Content */}
-            <div className="bg-card rounded-lg shadow-sm border p-8 my-8">
+            {/* Main Content - Glassmorphism */}
+            <div className="glass-card rounded-2xl shadow-xl border border-white/20 p-8 my-8">
               <StepComponent />
             </div>
 

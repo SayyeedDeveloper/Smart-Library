@@ -85,8 +85,8 @@ export function ResultsStep() {
       {/* Book List */}
       <div className="space-y-4">
         {sortedRecommendations.length > 0 ? (
-          sortedRecommendations.map((rec) => (
-            <BookCard key={rec.book.id} recommendation={rec} />
+          sortedRecommendations.map((rec, index) => (
+            <BookCard key={rec.book.id} recommendation={rec} index={index} />
           ))
         ) : (
           <div className="text-center py-12">
@@ -100,7 +100,17 @@ export function ResultsStep() {
   );
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background relative">
+      {/* Floating decorative shapes - RESULTS PAGE */}
+      <div className="pointer-events-none absolute -left-8 top-20 h-40 w-40 rounded-full bg-[#1d80dd]/35 blur-3xl" />
+      <div className="pointer-events-none absolute -right-4 top-40 h-36 w-36 rounded-full bg-[#ff9f40]/40 blur-3xl" />
+      <div className="pointer-events-none absolute left-1/4 top-96 h-32 w-32 rounded-full bg-[#f7d94c]/40 blur-2xl" />
+      <div className="pointer-events-none absolute right-1/3 bottom-40 h-40 w-40 rounded-full bg-[#d85085]/35 blur-3xl" />
+      <div className="pointer-events-none absolute left-1/2 bottom-20 h-28 w-28 rounded-full bg-[#1d80dd]/30 blur-2xl" />
+      <div className="pointer-events-none absolute right-1/4 top-64 h-24 w-24 rounded-full bg-[#ff9f40]/35 blur-xl" />
+      <div className="pointer-events-none absolute left-2/3 bottom-60 h-32 w-32 rounded-full bg-[#f7d94c]/35 blur-2xl" />
+      <div className="pointer-events-none absolute -left-4 bottom-96 h-28 w-28 rounded-full bg-[#d85085]/40 blur-xl" />
+
       {/* Mobile/Tablet: Tabbed Interface (< 1024px) */}
       <div className="lg:hidden pb-24">
         <div className="container mx-auto px-4 max-w-5xl">
@@ -112,8 +122,8 @@ export function ResultsStep() {
             />
           </div>
 
-          {/* Header with Robot */}
-          <div className="text-center space-y-3 py-8">
+          {/* Header with Robot - Glassmorphism */}
+          <div className="glass-card rounded-2xl border border-white/20 text-center space-y-3 py-8 px-4 mb-6">
             <div className="flex items-center justify-center gap-4">
               <div className="hidden sm:block animate-in zoom-in duration-700">
                 <Image
@@ -200,9 +210,9 @@ export function ResultsStep() {
       </div>
 
       {/* Desktop: Sidebar Layout (>= 1024px) */}
-      <div className="hidden lg:flex lg:min-h-screen">
-        {/* Main Content Area - Scrollable */}
-        <main className="flex-1 overflow-y-auto">
+      <div className="hidden lg:block lg:min-h-screen">
+        {/* Main Content Area - Scrollable with right padding for fixed chat */}
+        <main className="pr-[480px]">
           <div className="container mx-auto px-8 py-12 max-w-5xl">
             {/* Progress Indicator */}
             <div className="mb-8">
@@ -212,8 +222,8 @@ export function ResultsStep() {
               />
             </div>
 
-            {/* Header with Robots */}
-            <div className="text-center space-y-4 mb-12">
+            {/* Header with Robots - Glassmorphism */}
+            <div className="glass-card rounded-2xl border border-white/20 text-center space-y-4 mb-12 py-8 px-6">
               <div className="flex items-center justify-center gap-4">
                 <div className="animate-in zoom-in duration-700">
                   <Image
@@ -276,11 +286,9 @@ export function ResultsStep() {
           </div>
         </main>
 
-        {/* Chat Sidebar - Fixed */}
-        <aside className="w-[480px] border-l bg-muted/20 flex-shrink-0">
-          <div className="h-screen sticky top-0 flex flex-col">
-            <ChatContainer wizardData={wizardData} recommendations={recommendations} />
-          </div>
+        {/* Chat Sidebar - Truly Fixed */}
+        <aside className="fixed top-0 right-0 w-[480px] h-screen border-l border-white/20 glass-card-subtle flex flex-col">
+          <ChatContainer wizardData={wizardData} recommendations={recommendations} />
         </aside>
       </div>
     </div>

@@ -25,7 +25,7 @@ export function ChatContainer({ wizardData, recommendations }: ChatContainerProp
   const hasMessages = messages.length > 0;
 
   return (
-    <div className="flex flex-col h-full bg-background">
+    <div className="flex flex-col h-full bg-transparent">
       {/* Header - Fixed */}
       <div className="flex-shrink-0">
         <ChatHeader bookCount={recommendations.length} />
@@ -69,7 +69,7 @@ export function ChatContainer({ wizardData, recommendations }: ChatContainerProp
       )}
 
       {/* Input area - Fixed at bottom */}
-      <div className="flex-shrink-0 border-t bg-card p-4">
+      <div className="flex-shrink-0 border-t border-white/20 glass-card-subtle p-4">
         <ChatInput
           onSendMessage={sendMessage}
           disabled={isLoading}

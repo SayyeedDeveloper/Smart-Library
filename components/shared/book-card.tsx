@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BookRecommendation } from "@/types";
@@ -9,14 +10,32 @@ import { cn } from "@/lib/utils";
 
 interface BookCardProps {
   recommendation: BookRecommendation;
+  index?: number;
 }
 
-export function BookCard({ recommendation }: BookCardProps) {
+// Rotate through colorful pastel backgrounds
+const cardColors = [
+  "bg-[#d4f1f9]", // blue-light
+  "bg-[#ffead4]", // orange-light
+  "bg-[#fef5d4]", // yellow-light
+  "bg-[#fce4ec]", // pink-light
+  "bg-[#f3e5f5]", // purple-light
+  "bg-[#e3f2fd]", // light blue
+];
+
+export function BookCard({ recommendation, index = 0 }: BookCardProps) {
   const { book, matchReasons } = recommendation;
   const [expanded, setExpanded] = useState(false);
+  const bgColor = cardColors[index % cardColors.length];
 
   return (
-    <Card className="p-4 hover:shadow-md transition-shadow">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.08, type: "spring", stiffness: 100 }}
+      whileHover={{ y: -8, rotate: 0.5 }}
+    >
+      <Card className={cn("p-6 border-2 border-border shadow-lg hover:shadow-2xl transition-all duration-300 rounded-3xl", bgColor)}>
       <div className="flex gap-4">
         {/* Cover Image */}
         <div className="flex-shrink-0">
@@ -95,5 +114,6 @@ export function BookCard({ recommendation }: BookCardProps) {
         </div>
       </div>
     </Card>
+    </motion.div>
   );
 }

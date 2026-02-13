@@ -6,7 +6,17 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Floating decorative shapes - MORE & MORE VISIBLE */}
+      <div className="pointer-events-none absolute -left-8 top-20 h-40 w-40 rounded-full bg-[#1d80dd]/30 blur-3xl" />
+      <div className="pointer-events-none absolute -right-4 top-40 h-32 w-32 rounded-full bg-[#ff9f40]/35 blur-2xl" />
+      <div className="pointer-events-none absolute left-1/4 top-60 h-24 w-24 rounded-full bg-[#f7d94c]/40 blur-xl" />
+      <div className="pointer-events-none absolute right-1/3 bottom-40 h-36 w-36 rounded-full bg-[#d85085]/30 blur-3xl" />
+      <div className="pointer-events-none absolute left-1/2 bottom-20 h-28 w-28 rounded-full bg-[#1d80dd]/25 blur-2xl" />
+      <div className="pointer-events-none absolute right-1/4 top-96 h-20 w-20 rounded-full bg-[#ff9f40]/30 blur-xl" />
+      <div className="pointer-events-none absolute left-2/3 bottom-60 h-32 w-32 rounded-full bg-[#f7d94c]/30 blur-2xl" />
+      <div className="pointer-events-none absolute -left-4 bottom-40 h-24 w-24 rounded-full bg-[#d85085]/35 blur-xl" />
+
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="max-w-4xl mx-auto text-center space-y-8">
@@ -58,30 +68,29 @@ export default function Home() {
 
           {/* Headline */}
           <div className="space-y-4">
-            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
-              Discover Your Next
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-extrabold text-foreground leading-tight">
+              📚 Discover Your Next
               <br />
-              <span className="text-primary">Favorite Book</span> 📚✨
+              <span className="text-primary">Favorite</span> <span className="text-secondary">Book!</span> ✨
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              Answer a few fun questions and we'll recommend the perfect books tailored just for you!
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto font-medium">
+              🤖 Answer a few fun questions and we'll recommend the perfect books tailored just for you!
             </p>
           </div>
 
           {/* CTA Button */}
           <div className="pt-4">
             <Link href="/wizard?step=name">
-              <Button size="lg" className="h-14 px-8 text-lg gap-2 rounded-full">
-                <Sparkles className="w-5 h-5" />
-                Start Your Book Journey
+              <Button size="lg" className="h-16 px-10 text-lg gap-2 rounded-3xl shadow-xl hover:scale-105 active:scale-95 transition-transform font-bold">
+                🚀 Start Your Book Journey
               </Button>
             </Link>
           </div>
         </div>
 
-        {/* Features */}
+        {/* Features with Glassmorphism */}
         <div className="max-w-4xl mx-auto mt-20 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="p-6 text-center space-y-3 hover:shadow-md transition-shadow">
+          <Card className="glass-card-strong p-6 text-center space-y-3 hover:shadow-xl hover:scale-[1.05] transition-all duration-300 border-white/30">
             <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
               <Heart className="w-6 h-6 text-primary" />
             </div>
@@ -91,7 +100,7 @@ export default function Home() {
             </p>
           </Card>
 
-          <Card className="p-6 text-center space-y-3 hover:shadow-md transition-shadow">
+          <Card className="glass-card-strong p-6 text-center space-y-3 hover:shadow-xl hover:scale-[1.05] transition-all duration-300 border-white/30">
             <div className="w-12 h-12 rounded-full bg-secondary/30 flex items-center justify-center mx-auto">
               <Star className="w-6 h-6 text-secondary-foreground" />
             </div>
@@ -101,7 +110,7 @@ export default function Home() {
             </p>
           </Card>
 
-          <Card className="p-6 text-center space-y-3 hover:shadow-md transition-shadow">
+          <Card className="glass-card-strong p-6 text-center space-y-3 hover:shadow-xl hover:scale-[1.05] transition-all duration-300 border-white/30">
             <div className="w-12 h-12 rounded-full bg-accent/30 flex items-center justify-center mx-auto">
               <Sparkles className="w-6 h-6 text-accent-foreground" />
             </div>

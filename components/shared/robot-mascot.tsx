@@ -53,9 +53,8 @@ export function RobotMascot({
         height={robotSize}
         className={cn(
           "object-contain drop-shadow-xl",
-          animate && "animate-bounce"
+          animate && "animate-float"
         )}
-        style={animate ? { animationDuration: "3s" } : undefined}
         priority={size === "xl" || size === "lg"}
       />
     </div>
