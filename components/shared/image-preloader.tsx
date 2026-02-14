@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import Image from "next/image";
 
 const ROBOT_IMAGES = [
   "/robot/Future_Robot_3d 1.png",
@@ -11,13 +11,18 @@ const ROBOT_IMAGES = [
 ];
 
 export function ImagePreloader() {
-  useEffect(() => {
-    // Preload robot images
-    ROBOT_IMAGES.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
-  }, []);
-
-  return null;
+  return (
+    <div className="hidden">
+      {ROBOT_IMAGES.map((src) => (
+        <Image
+          key={src}
+          src={src}
+          alt="Preload"
+          width={120}
+          height={120}
+          priority
+        />
+      ))}
+    </div>
+  );
 }

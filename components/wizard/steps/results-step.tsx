@@ -225,6 +225,14 @@ export function ResultsStep() {
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back
               </Button>
+              <div className="text-center space-y-1 py-2">
+                <p className="text-xs sm:text-sm font-medium text-foreground">
+                  Made with ❤️ by English teachers team
+                </p>
+                <p className="text-[10px] sm:text-xs text-muted-foreground">
+                  Andijan region, Khojaabad district, School №2
+                </p>
+              </div>
               <Button
                 onClick={resetWizard}
                 variant="outline"
@@ -311,11 +319,11 @@ export function ResultsStep() {
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back
               </Button>
-              <div className="text-center space-y-1 py-4">
-                <p className="text-sm font-medium text-foreground">
+              <div className="text-center space-y-1 py-2">
+                <p className="text-xs sm:text-sm font-medium text-foreground">
                   Made with ❤️ by English teachers team
                 </p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-[10px] sm:text-xs text-muted-foreground">
                   Andijan region, Khojaabad district, School №2
                 </p>
               </div>
