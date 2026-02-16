@@ -51,7 +51,7 @@ export function WizardNavigation({
 
         <div className="text-center space-y-1 py-2">
           <p className="text-xs sm:text-sm font-medium text-foreground">
-            Made with ❤️ by ABUIV
+            Made with ❤️ by English teachers team
           </p>
           <p className="text-[10px] sm:text-xs text-muted-foreground">
             Andijan region, Khojaabad district, School №2
